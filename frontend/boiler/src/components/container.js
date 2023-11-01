@@ -4,14 +4,17 @@ import Result from './result'
 
 const Container = () => {
   const [userValue,setuserValue]=useState("Hello welcome. How are you.")
+  const [loading,setloading]=useState(false)
   const [result,setresult]=useState()
   useEffect(() => {
     getAnalysis();
   }, [userValue])
   
   const getAnalysis=async()=>{
+   
     if(userValue!=="Hello welcome. How are you.")
-   { try {
+   { setloading(true) 
+    try {
       const rawResponse = await fetch('http://127.0.0.1:5000/analysis', {
         method: 'POST',
         headers: {
@@ -23,16 +26,18 @@ const Container = () => {
       const content = await rawResponse.json();
       console.log(content)
       setresult(content)
+      setloading(false)
     } catch (error) {
       console.log(error)
+      setloading(false)
     }}
  
   }
 
   return (
-    <div className="flex ">
+    <div className="flex flex-col md:flex-row justify-center">
         <div className="left w-full md:w-[60%]">
-            <UserInput setuserValuefxn={setuserValue} />
+            <UserInput setuserValuefxn={setuserValue} loading={loading}/>
         </div>
         <div className="right w-full md:w-[30%]">
         <Result result={result}/>

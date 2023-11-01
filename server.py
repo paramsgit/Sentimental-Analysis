@@ -44,7 +44,11 @@ def analysis():
         Subjectivity =  str(Subjectivity)
         print(my_prediction,newstr,Polarity,Subjectivity)
         return jsonify({"result":int(my_prediction[0]),"polarity":Polarity,"subjectivity":Subjectivity})
+    
 
+@app.route('/twitter_analysis', methods=['POST'])
+def twitterText():
+    return jsonify({"result":"ok"})
 
 if __name__ == '__main__':
     app.run(debug=True)

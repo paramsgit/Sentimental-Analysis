@@ -2,36 +2,34 @@ import React, { useState,useEffect } from 'react'
 import ReactSpeedometer from "react-d3-speedometer"
 const Result = (props) => {
     const [needleValue,setneedleValue]=useState(500)
-    // const [polarity,setpolarity]=useState()
-    let polarity=0;
-    if(props.result)
-    polarity=props.result.polarity
-    let subjectivity=0;
-    if(props.result)
-    subjectivity=props.result.subjectivity
+    const [polarity,setpolarity]=useState(0)
+    const [subjectivity,setsubjectivity]=useState(0)
 
     useEffect(() => {
-      if(polarity<0){
-        polarity=polarity*-1;
-        let newValue=500-(polarity*500)
-        setneedleValue(newValue)
-      }else{
-        let newValue=polarity*500
-        newValue=newValue+500
-        setneedleValue(newValue)
+      if (props.result) {
+        setpolarity(props.result.polarity);
+        setsubjectivity(props.result.subjectivity);
       }
-    }, [polarity])
+        
+          if (polarity < 0) {
+            setneedleValue(500 + (polarity * 500));
+          } else {
+            setneedleValue(polarity * 500 + 500);
+          }
+        
+      
+    }, [props.result,polarity]);
     
   return (
-    <div>
+    <div className='p-4 pb-0 w-full flex flex-col items-center justify-center'>
 
 <ReactSpeedometer
-        width={500}
-        needleHeightRatio={0.7}
+        width={400}
+        needleHeightRatio={0.6}
         value={needleValue}
         customSegmentStops={[0, 400, 600, 1000]}
         segmentColors={['#9399ff', '#14ffec', '#00bbf0']}
-        currentValueText="How are you?"
+        currentValueText={`${polarity}`}
         customSegmentLabels={[
           {
             text: 'Negative',
@@ -56,8 +54,7 @@ const Result = (props) => {
         textColor={'#d8dee9'}
       />
 
-        <h1 className='text-lg'>{polarity}</h1>
-        <h1 className='text-lg'>{subjectivity}</h1>
+        <h1 className='mt-[-40px] text-lg'>Subjectivity : {subjectivity}</h1>
 
 
 

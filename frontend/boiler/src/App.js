@@ -5,8 +5,11 @@ import Navbar from './components/navbar';
 function App() {
   return (
    <>
- <Navbar/>
- <Container/>
+   <div className='min-h-screen'>
+   <Navbar/>
+   <Container/>
+   </div>
+
    </>
   );
 }
